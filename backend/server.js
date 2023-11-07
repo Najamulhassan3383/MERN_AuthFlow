@@ -7,9 +7,10 @@ import connectDB from "./config/db.js";
 dotenv.config();
 
 const app = express();
-connectDB();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+connectDB();
 
 app.use("/api/users", UserRouter);
 

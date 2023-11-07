@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -16,31 +17,28 @@ const UserSchema = new mongoose.Schema(
         "please add a valid email",
       ],
     },
-    photo: {
-      type: String,
-      default: "no-photo.jpg",
-    },
+
     password: {
       type: String,
       required: [true, "Please add a password"],
       minlength: 8,
       select: false,
     },
-    passwordConfirm: {
-      type: String,
-      required: [true, "Please confirm password"],
-      validate: {
-        validator: function (el) {
-          return el === this.password;
-        },
-        message: "Password are not the same",
-      },
-    },
   },
   {
     timestamps: true,
   }
 );
+
+// Encrypt password using bcrypt
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
 
 const User = mongoose.model("User", UserSchema);
 
