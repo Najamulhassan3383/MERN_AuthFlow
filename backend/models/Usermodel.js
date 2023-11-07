@@ -22,9 +22,9 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please add a password"],
       minlength: 8,
-      select: false,
     },
   },
+
   {
     timestamps: true,
   }
@@ -40,6 +40,9 @@ UserSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
+UserSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 const User = mongoose.model("User", UserSchema);
 
 export default User;
