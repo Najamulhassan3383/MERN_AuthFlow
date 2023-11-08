@@ -1,12 +1,9 @@
-import LoginForm from "./components/LoginForm";
-import SignUp from "./components/SignUp";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
     <div className="bg-gray-300">
-      <LoginForm />
-      {/* RiAccountPinBoxFill */}
-      <SignUp />
+      <Outlet />
     </div>
   );
 }

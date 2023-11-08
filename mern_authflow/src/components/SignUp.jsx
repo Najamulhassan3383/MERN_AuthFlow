@@ -1,6 +1,7 @@
 import { BsFillPersonVcardFill } from "react-icons/bs";
 import { IoCreateOutline } from "react-icons/io5";
 import { GiConfirmed } from "react-icons/gi";
+import { NavLink } from "react-router-dom";
 
 function SignUp() {
   return (
@@ -147,12 +148,12 @@ function SignUp() {
 
         <div className="text-gray-900 mt-6">
           Already have an account?
-          <a
+          <NavLink
             className="underline border-b border-blue text-blue-400 ml-2"
-            href="../login/"
+            to="/"
           >
             Log in
-          </a>
+          </NavLink>
           .
         </div>
       </div>

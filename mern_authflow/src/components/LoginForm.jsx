@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const LoginForm = () => {
   return (
@@ -110,9 +111,8 @@ const LoginForm = () => {
           </form>
         </div>
         <div className="flex justify-center items-center mt-6">
-          <a
-            href="#"
-            target="_blank"
+          <NavLink
+            to="/signup"
             className="inline-flex items-center font-bold text-blue-500 hover:text-blue-700 text-xs text-center"
           >
             <span>
@@ -129,7 +129,7 @@ const LoginForm = () => {
               </svg>
             </span>
             <span className="ml-2">You don't have an account?</span>
-          </a>
+          </NavLink>
         </div>
       </div>
     </div>
