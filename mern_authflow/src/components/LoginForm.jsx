@@ -6,14 +6,15 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { useLoginMutation } from "./Redux/Slices/UsersApiSlice";
 import { setCredentials } from "./Redux/Slices/AuthSlice";
+import { toast } from "react-toastify";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("najam@email.com");
+  const [password, setPassword] = useState("12345678");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [login, { isLoading, isSuccess, isError, error }] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
 
   const { user } = useSelector((state) => state.auth);
 
@@ -23,16 +24,17 @@ const LoginForm = () => {
     }
   }, [navigate, user]);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    login({ email, password })
-      .then((res) => {
-        dispatch(setCredentials(res.data));
-        navigate("/home");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      const res = await login({ email, password }).unwrap();
+      console.log(res);
+      dispatch(setCredentials(res));
+      toast.success("Login Successful");
+      navigate("/home");
+    } catch (error) {
+      toast.error(error?.data?.message || error.error);
+    }
   };
 
   return (
