@@ -1,7 +1,40 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+import { useSelector, useDispatch } from "react-redux";
+
+import { useLoginMutation } from "./Redux/Slices/UsersApiSlice";
+import { setCredentials } from "./Redux/Slices/AuthSlice";
 
 const LoginForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [login, { isLoading, isSuccess, isError, error }] = useLoginMutation();
+
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+    }
+  }, [navigate, user]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    login({ email, password })
+      .then((res) => {
+        dispatch(setCredentials(res.data));
+        navigate("/home");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center ">
       <div className="flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-md w-full max-w-md">
@@ -10,7 +43,7 @@ const LoginForm = () => {
         </div>
 
         <div className="mt-10">
-          <form action="#">
+          <form onSubmit={submitHandler}>
             <div className="flex flex-col mb-6">
               <label
                 htmlFor="email"
@@ -37,6 +70,8 @@ const LoginForm = () => {
                   id="email"
                   type="email"
                   name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
                   placeholder="E-Mail Address"
                 />
@@ -70,6 +105,8 @@ const LoginForm = () => {
                   id="password"
                   type="password"
                   name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
                   placeholder="Password"
                 />
