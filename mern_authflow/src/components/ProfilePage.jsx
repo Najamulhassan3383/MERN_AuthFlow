@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 
 const ProfilePage = () => {
   // Assuming you have a user object with properties like name, email, and picture
 
   // State for handling form input
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
   // Function to handle profile update
   const handleUpdateProfile = () => {
@@ -19,8 +20,22 @@ const ProfilePage = () => {
         src="./najam.jpg" // Replace with the actual URL of the user's profile picture
         alt="Profile"
       />
-      <h2 className="text-xl font-semibold mb-2">najam</h2>
-      <p className="text-gray-600 mb-4">najamulhassan721@gmailc.om</p>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="password"
+        >
+          Email
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="password"
+          type="password"
+          placeholder="Enter your new email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
 
       <div className="mb-4">
         <label

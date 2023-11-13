@@ -1,12 +1,28 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useLogoutMutation } from "./Redux/Slices/UsersApiSlice";
+import { clearCredentials } from "./Redux/Slices/AuthSlice";
 
 function HomePage() {
   const { user } = useSelector((state) => state.auth);
-  const [openModel, setOpenModel] = useState(false);
+
+  const [logout] = useLogoutMutation();
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    console.log("logout");
+    try {
+      await logout().unwrap();
+      dispatch(clearCredentials());
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   console.log(user);
   useEffect(() => {
     if (!user) {
@@ -34,7 +50,10 @@ function HomePage() {
       <div className="flex flex-col justify-center items-center h-full m-auto">
         <div className="text-3xl font-bold">Welcome to MERN AUTH</div>
         <div className="my-4">
-          <button className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+          <button
+            className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+            onClick={handleLogout}
+          >
             Log Out
           </button>
           {!user && (
