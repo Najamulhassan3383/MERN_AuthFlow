@@ -9,6 +9,7 @@ import SignUp from "./components/SignUp.jsx";
 import HomePage from "./components/HomePage.jsx";
 import store from "./components/Redux/Store.jsx";
 import { Provider } from "react-redux";
+import ProfilePage from "./components/ProfilePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
         path: "home",
         element: <HomePage />,
       },
+      {
+        path: "profile",
+        element: <ProfilePage/>,
+      }
     ],
   },
 ]);

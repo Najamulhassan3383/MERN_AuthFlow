@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 function HomePage() {
   const { user } = useSelector((state) => state.auth);
-  const [open, setOpen] = useState(false);
+  const [openModel, setOpenModel] = useState(false);
   const navigate = useNavigate();
   console.log(user);
   useEffect(() => {
@@ -22,7 +22,7 @@ function HomePage() {
           {user && (
             <>
               <button
-                onClick={() => setOpen(!open)}
+                onClick={() => navigate("/profile")}
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
               >
                 Profile
