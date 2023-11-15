@@ -41,7 +41,7 @@ const ProfilePage = () => {
               id="email"
               type="text"
               placeholder="Enter your new email"
-              value={email}
+              value={user.email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
@@ -57,7 +57,7 @@ const ProfilePage = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
-              placeholder="Enter your new password"
+              placeholder="Enter your new password to change"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
